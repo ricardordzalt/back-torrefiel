@@ -74,7 +74,7 @@ module.exports = {
     register: async function(req, res){
             const {name, userName, lastName, motherLastName, email} = req.body
             const phone = req.body.phone;
-            const rol = 'admin';
+            const rol = 'Trabajador';
             const isVerify = false
             // async..await is not allowed in global scope, must use a wrapper
             let Req = req.body
