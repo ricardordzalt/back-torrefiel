@@ -113,7 +113,7 @@ module.exports = {
             newUser.save()
                 .then(() => {
                     sendEmail(Req, res, html)
-                    // res.status(200).json('User add, hemos enviado un email para verificarlo')
+                    res.status(200).json('User add, hemos enviado un email para verificarlo')
                 })
                 .catch(err => res.status(404).json('Error' + err));
     },
