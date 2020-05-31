@@ -5,7 +5,7 @@ const connecBD = require('./db')
 const morgan = require('morgan');
 const cors = require('cors');
 // const mongoose = require('mongoose');
-
+const router = express.Router();
 //connect to data base
 async function initApp() {
     try {
@@ -32,7 +32,12 @@ const userRouters = require('./routers/user.router')
 const clientRouters = require('./routers/clients.router')
 const serviceRouters = require('./routers/service.router')
 const chatRouters = require('./routers/chat.router')
+
 app.use('/user', userRouters)
 app.use('/client', clientRouters)
 app.use('/service', serviceRouters)
 app.use('/chat', chatRouters)
+
+app.get('/', (req, res) => {
+    res.send({mesasse: 'Hello World'})
+})
