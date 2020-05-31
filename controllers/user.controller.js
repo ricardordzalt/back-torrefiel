@@ -177,7 +177,9 @@ module.exports = {
             if(err) {
                 return res.status(403).send({ 
                     message: 'no tienes los permisos suficientes para estar aqui', 
-                    error: err 
+                    error: err,
+                    token_1: token,
+                    token_param: decode
                 })
             }
             
