@@ -1,3 +1,4 @@
+require('dotenv').config
 const  User = require('../models/user.model')
 const Service = require('../models/service.model')
 
@@ -5,6 +6,7 @@ const jwt = require('jsonwebtoken')
 const moment = require('moment')
 const bcrypt = require('bcryptjs')
 const { sendEmail } = require('../services') 
+const config = require('../config')
 
 module.exports = {
     all: function(req, res){
@@ -39,7 +41,7 @@ module.exports = {
     },
     confirmation: function (req, res) {
         let token = req.params.token;
-        jwt.verify(token, process.env.SECRET_TOKEN , (err, decode) => {
+        jwt.verify(token, config.app.secret_token , (err, decode) => {
             if(err) {
                 return res.status(403).send({ 
                     message: 'no tienes los permisos suficientes para estar aqui', 
@@ -72,7 +74,7 @@ module.exports = {
     register: async function(req, res){
             const {name, userName, lastName, motherLastName, email} = req.body
             const phone = req.body.phone;
-            const rol = 'trabajador';
+            const rol = 'admin';
             const isVerify = false
             // async..await is not allowed in global scope, must use a wrapper
             let Req = req.body
@@ -83,10 +85,10 @@ module.exports = {
                 isVerify: false,
                 phone: req.body.phone
             }
-            let verify = jwt.sign(payLoad, process.env.SECRET_TOKEN, { expiresIn: '3h' });
+            let verify = jwt.sign(payLoad, config.app.secret_token , { expiresIn: '3h' });
             console.log('Token: ', verify)
 
-            const html = "<a href=" + "'http://localhost:5001/user/confirmation/" +verify+ "' >verify your accuont</a>";
+            const html = "<a href="+config.app.host+"'/user/confirmation/"+verify+"' >verify your accuont</a>";
             
             const newUser = new User({userName, email, name, phone, rol, isVerify, lastName, motherLastName})
                                
@@ -134,7 +136,7 @@ module.exports = {
                                 rol: user.rol
                             }
                         // poner clave secreta en una variable de entorno
-                            jwt.sign(payLoad, process.env.SECRET_TOKEN , (err, token) => {
+                            jwt.sign(payLoad, config.app.secret_token , (err, token) => {
                                 if(err) return res.status(500).json({Error : err})
                                 res.status(200).json({message: 'aceso consedido', token})
                             })
@@ -160,10 +162,10 @@ module.exports = {
                     email: user.email,
                     phone: user.phone
                 }
-                let verify = jwt.sign(payLoad, process.env.SECRET_TOKEN, { expiresIn: '3h' });
+                let verify = jwt.sign(payLoad, config.app.secret_token, { expiresIn: '3h' });
                 console.log('Token: ', verify)
         
-                const html = "<a href=" + "'http://localhost:5001/user/passwordreset/" +verify+ "' >Password Reset</a>";
+                const html = "<a href=" + config.app.host +"'/user/passwordreset/" +verify+ "' >Password Reset</a>";
                 sendEmail(user, res, html)
             })
             .catch(err => res.status(404).json('Error' + err))
@@ -171,7 +173,7 @@ module.exports = {
     },
     passReset: function(req, res) {
         let token = req.params.token;
-        jwt.verify(token, process.env.SECRET_TOKEN , (err, decode) => {
+        jwt.verify(token, config.app.secret_token , (err, decode) => {
             if(err) {
                 return res.status(403).send({ 
                     message: 'no tienes los permisos suficientes para estar aqui', 

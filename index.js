@@ -12,7 +12,7 @@ async function initApp() {
         connecBD()
 
         //Listening
-        app.listen(port, () => console.log(`server on ${host}:${port}`) );
+        app.listen(port, () => console.log(`server on ${host}`) );
     }catch(err) {
         console.error(err)
         process.exit(0)

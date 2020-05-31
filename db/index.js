@@ -9,7 +9,7 @@ connection.once('open', () => console.log('MongoDB database connection establish
 
 async function connecBD(port, host, dbName) {
     // const uri = `mongodb://${host}:${port}/${dbName}`
-    const uri = process.env.DB_MONGO
+    const uri = config.db.host
     await mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true})
 }
 const port = config.db.port
