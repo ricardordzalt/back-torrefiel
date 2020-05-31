@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer")
-
+const config = require('../config')
 function sendEmail (req, res, html) {
     async function main() {
         // Generate test SMTP service account from ethereal.email
@@ -12,8 +12,8 @@ function sendEmail (req, res, html) {
         port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
-            user: 'j.urbina.0179@gmail.com', // generated ethereal user
-            pass: '19111996te' // generated ethereal password
+            user: config.app.mail, // generated ethereal user
+            pass: config.app.mail_pass // generated ethereal password
         }
         });
         
