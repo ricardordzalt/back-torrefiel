@@ -85,7 +85,7 @@ module.exports = {
                 isVerify: false,
                 phone: req.body.phone
             }
-            let verify = jwt.sign(payLoad, config.app.secret_token , { expiresIn: '355h' });
+            let verify = jwt.sign(payLoad, config.app.secret_token , { expiresIn: '11h' });
             console.log('Token: ', verify)
 
             const html = "<a href="+config.app.host+"user/confirmation/"+verify+">verify your accuont</a>";
