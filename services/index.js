@@ -28,7 +28,7 @@ function sendEmail (req, res, html) {
         html: html // html body
         });
         console.log(req.email);
-        res.json("Message sent: %s", info.messageId);
+        res.status(200).json(info.messageId);
         // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
     
         // Preview only available when sending through an Ethereal account
