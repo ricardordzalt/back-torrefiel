@@ -126,7 +126,7 @@ module.exports = {
                 bcrypt.compare(password, user.password)
                     .then(match => {
                         if(!user.isVerify) return res.status(200).send({message: 'Tienes que verificar tu email.'})
-                        if(!match) return res.status(200).send({message: 'Password Incorrecta!!'})
+                        if(!match) return res.status(404).send({message: 'Password Incorrecta!!'})
 
                         // res.status.json({token: service.createToken(user)}) ;
                             payLoad = {
@@ -143,7 +143,7 @@ module.exports = {
                         
                         
                     })
-                    .catch(err => res.status(500).send({message: 'acá hay un erro ', err}))
+                    .catch(err => res.status(500).send({message: 'acá hay un error ', err}))
             })
                 
             .catch(err => res.status(500).send({err}))
