@@ -88,8 +88,8 @@ module.exports = {
             let verify = jwt.sign(payLoad, config.app.secret_token , { expiresIn: '11h' });
             console.log('Token: ', verify)
 
-            const html = "<a href="+config.app.host+"user/confirmation/"+verify+">verify your accuont</a>";
-            
+            // const html = "<a href="+config.app.host+"user/confirmation/"+verify+">verify your accuont</a>";
+            const html = SetMailing(`${config.app.host}user/confirmation/${verify}`);
             const newUser = new User({userName, email, name, phone, rol, isVerify, lastName, motherLastName})
                                
             let userDB = await User.findOne({ $or: [
@@ -165,7 +165,9 @@ module.exports = {
                 let verify = jwt.sign(payLoad, config.app.secret_token, { expiresIn: '3h' });
                 console.log('Token: ', verify)
         
-                const html = "<a href=" + config.app.host +"'/user/passwordreset/" +verify+ "' >Password Reset</a>";
+                // const html = "<a href=" + config.app.host +"'/user/passwordreset/" +verify+ "' >Password Reset</a>";
+                const html = SetMailing(`${config.app.host}user/passwordreset/${verify}`);
+
                 sendEmail(user, res, html)
             })
             .catch(err => res.status(404).json('Error' + err))
