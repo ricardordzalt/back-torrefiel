@@ -2,11 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const servicesSchema = new Schema({
-    numClien: {
-        type: Number,
-        unique: true,
-        required: true
-    },
+    
     description: {
         type: String,
         required: true,

@@ -7,7 +7,7 @@ module.exports = {
             .catch(err => res.status.status(404).json('Error' + err))
     },
     viewOne: function(req, res){
-        CLient.findById(req.params.id)
+        CLient.findById(req.params.numClient)
         .then(client => res.json(client))
         .catch(err => res.status(404).json('Error' + err));
     },
