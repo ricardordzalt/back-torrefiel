@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken')
 const moment = require('moment')
 const bcrypt = require('bcryptjs')
 const { sendEmail } = require('../services') 
+const SetMailing = require('../services/mail/mailing')
 const config = require('../config')
 
 module.exports = {
@@ -74,7 +75,7 @@ module.exports = {
     register: async function(req, res){
             const {name, userName, lastName, motherLastName, email} = req.body
             const phone = req.body.phone;
-            const rol = 'Trabajador';
+            const rol = 'admin';
             const isVerify = false
             // async..await is not allowed in global scope, must use a wrapper
             let Req = req.body
@@ -85,11 +86,11 @@ module.exports = {
                 isVerify: false,
                 phone: req.body.phone
             }
-            let verify = jwt.sign(payLoad, config.app.secret_token , { expiresIn: '11h' });
+            let verify = jwt.sign(payLoad, config.app.secret_token , { expiresIn: '3h' });
             console.log('Token: ', verify)
 
-            // const html = "<a href="+config.app.host+"user/confirmation/"+verify+">verify your accuont</a>";
-            const html = SetMailing(`${config.app.host}user/confirmation/${verify}`);
+            const html = "<a href="+config.app.host+"user/confirmation/"+verify+">verify your accuont</a>";
+            // const html = SetMailing(`${config.app.host}user/confirmation/${verify}`);
             const newUser = new User({userName, email, name, phone, rol, isVerify, lastName, motherLastName})
                                
             let userDB = await User.findOne({ $or: [
