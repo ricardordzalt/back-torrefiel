@@ -8,6 +8,9 @@ const servicesSchema = new Schema({
         required: true,
         trim: true
     },
+    numService: Number,
+    numDeliveryNote: Number,
+    numBill: Number,
     status: String,
     priority: String,
     amount: Number,
