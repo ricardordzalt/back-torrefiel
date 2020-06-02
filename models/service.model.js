@@ -15,8 +15,12 @@ const servicesSchema = new Schema({
     status: String,
     priority: String,
     amount: Number,
-    start: Date,
+    startHours: String,
+    startDate: Date,
     finalized: Date,
+    acivities:String,
+    note: String,
+    descriptionShort: String,
     client: {
         type: Schema.Types.ObjectId,
         ref: 'Client'

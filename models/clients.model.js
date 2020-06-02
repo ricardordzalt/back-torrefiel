@@ -7,6 +7,10 @@ const clientsSchema = new Schema({
         required: true,
         trim: true
     },
+    lastName: {
+        type: String,
+        required: true
+    },
     direction: String,
     province: String,
     municipality: String,
