@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const clientsSchema = new Schema({
-    numClien: {
+    numClient: {
         type: Number,
         unique: true,
         required: true
