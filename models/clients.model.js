@@ -3,34 +3,23 @@ const Schema = mongoose.Schema;
 
 const clientsSchema = new Schema({
     numClient: {
-        type: Number,
-        unique: true,
-        required: true
+        type: Number
     },
     name: {
-        type: String,
-        required: true,
-        trim: true
+        type: String
     },
     lastName: {
-        type: String,
-        required: true
+        type: String
     },
     direction: String,
     province: String,
     municipality: String,
     postalcode: Number,
     phone: {
-        type: Number,
-        unique: true,
-        minlength: 7
+        type: Number
     },
     email: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true,
-        minlength: 3
+        type: String
     },
     services: [{
         type: Schema.Types.ObjectId,
