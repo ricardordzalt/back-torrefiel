@@ -36,30 +36,35 @@ module.exports = {
         .catch(err => res.status(404).json('Error' + err));
     },
     register: async function(req, res) {
+        res.status(200).send({
+            id,
+            client,
+            newService
+    })
 
-            try {
-                const { description, status, priority, amount, startHours, startDate, finalized, numService, numDeliveryNote, numBill, acivities, note, descriptionShort } = req.body
-                const id = req.params.id
+            // try {
+            //     const { description, status, priority, amount, startHours, startDate, finalized, numService, numDeliveryNote, numBill, acivities, note, descriptionShort } = req.body
+            //     const id = req.params.id
                 
-                const client = await  Client.findById(req.params.id)
-                const newService = new Service(description, status, priority, amount, startHours, startDate, finalized, numService, numDeliveryNote, numBill, acivities, note, descriptionShort)
-                // newService.client = client
-                // await newService.save()
+            //     const client = await  Client.findById(req.params.id)
+            //     const newService = new Service(description, status, priority, amount, startHours, startDate, finalized, numService, numDeliveryNote, numBill, acivities, note, descriptionShort)
+            //     // newService.client = client
+            //     // await newService.save()
 
-                // client.services.push(newService)
-                // await client.save()
-                // res.status(200).send(newService)
-                res.status(200).send({
-                    id,
-                    client,
-                    newService
-            })
-            }
-            catch(err) {
-                res.status(404).send({
-                    menssages: 'hubo un error',
-                    error: err
-            })
+            //     // client.services.push(newService)
+            //     // await client.save()
+            //     // res.status(200).send(newService)
+            //     res.status(200).send({
+            //         id,
+            //         client,
+            //         newService
+            // })
+            // }
+            // catch(err) {
+            //     res.status(404).send({
+            //         menssages: 'hubo un error',
+            //         error: err
+            // })
             }
     },
     addWorker: async function(req, res) {
