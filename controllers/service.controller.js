@@ -38,14 +38,16 @@ module.exports = {
     register: async function(req, res) {
 
             try {
+                const { description, status, priority, amount, startHours, startDate, finalized, numService, numDeliveryNote, numBill, acivities, note, descriptionShort } = req.body
+                
                 const client = await  Client.findById(req.params.id)
-                const newService = new Service(req.body)
+                const newService = new Service(description, status, priority, amount, startHours, startDate, finalized, numService, numDeliveryNote, numBill, acivities, note, descriptionShort)
                 newService.client = client
                 await newService.save()
 
                 client.services.push(newService)
                 await client.save()
-                res.json('nuevo servicio guardado al cliente')
+                res.send(newService)
             }
             catch(err) {
                 res.json(err)
