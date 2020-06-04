@@ -39,15 +39,21 @@ module.exports = {
 
             try {
                 const { description, status, priority, amount, startHours, startDate, finalized, numService, numDeliveryNote, numBill, acivities, note, descriptionShort } = req.body
+                const id = req.params.id
                 
                 const client = await  Client.findById(req.params.id)
                 const newService = new Service(description, status, priority, amount, startHours, startDate, finalized, numService, numDeliveryNote, numBill, acivities, note, descriptionShort)
-                newService.client = client
-                await newService.save()
+                // newService.client = client
+                // await newService.save()
 
-                client.services.push(newService)
-                await client.save()
-                res.status(200).send(newService)
+                // client.services.push(newService)
+                // await client.save()
+                // res.status(200).send(newService)
+                res.status(200).send({
+                    id,
+                    client,
+                    newService
+            })
             }
             catch(err) {
                 res.status(404).send({
