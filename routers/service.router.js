@@ -5,7 +5,7 @@ const isAdmin = require('../middleware/isadmin')
 const Service = require('../controllers/service.controller')
 
 // acá va el id del cliente que está pidiendo el servico
-router.route('/register/:id').post( Service.register)
+router.route('/register/:idClient').post( Service.register)
 router.route('/').get(Service.all)
 // router.route('/:id').get(isAdmin, User.viewOne)
 router.route('/update/:id').put( Service.edit)
