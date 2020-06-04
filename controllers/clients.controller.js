@@ -34,8 +34,9 @@ module.exports = {
     },
     register: function(req, res) {
             const newClient = new CLient(req.body)
+            const user = req.body
             newClient.save()
-                .then(() => res.json('client add!!'))
+                .then(() => res.status(200).send({message: 'User add!', user}))
                 .catch(err => res.status(404).json('Error' + err))
     },
     services: async function(req, res) {
