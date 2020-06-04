@@ -50,7 +50,7 @@ module.exports = {
                 res.send(newService)
             }
             catch(err) {
-                res.json(err)
+                res.json(err, '+++++++++++++++++++++++++++++++++++')
             }
     },
     addWorker: async function(req, res) {
