@@ -4,9 +4,7 @@ const Schema = mongoose.Schema;
 const servicesSchema = new Schema({
     
     description: {
-        type: String,
-        required: true,
-        trim: true
+        type: String
     },
     numService: Number,
     numDeliveryNote: Number,
