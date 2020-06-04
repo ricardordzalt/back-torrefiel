@@ -65,7 +65,7 @@ module.exports = {
             //         menssages: 'hubo un error',
             //         error: err
             // })
-            }
+            // }
     },
     addWorker: async function(req, res) {
         try {
