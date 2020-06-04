@@ -35,7 +35,7 @@ module.exports = {
         })
         .catch(err => res.status(404).json('Error' + err));
     },
-    register: function(req, res) {
+    register: async function(req, res) {
         const id = req.params.idClient
         // const client = await  Client.findById(req.params.id)
         // const newService = new Service(description, status, priority, amount, startHours, startDate, finalized, numService, numDeliveryNote, numBill, acivities, note, descriptionShort)
