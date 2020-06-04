@@ -37,7 +37,7 @@ module.exports = {
             
             newClient.save()
                 .then(() => {
-                    const client = await CLient.findById(req.email);
+                    let client = await CLient.findById(req.email);
                     res.status(200).send({message: 'User add!', client})
             })
                 .catch(err => res.status(404).json('Error' + err))
