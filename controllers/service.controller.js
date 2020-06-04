@@ -50,7 +50,10 @@ module.exports = {
                 res.status(200).send(newService)
             }
             catch(err) {
-                res.status(404).sen(err)
+                res.status(404).send({
+                    menssages: 'hubo un error',
+                    error: err
+            })
             }
     },
     addWorker: async function(req, res) {
