@@ -38,8 +38,8 @@ module.exports = {
             newClient.save()
                 .then(() => {
                     Client.findOne(req.email)
-                        .then(res => {
-                            res.status(200).send({message: 'User add!'})
+                        .then(client => {
+                            res.status(200).send({message: 'User add!', client})
                         })
                         .catch(err => res.status(404).json('Error' + err))
                     
