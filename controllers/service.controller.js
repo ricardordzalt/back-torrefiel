@@ -47,10 +47,10 @@ module.exports = {
 
                 client.services.push(newService)
                 await client.save()
-                res.send(newService)
+                res.status(200).send(newService)
             }
             catch(err) {
-                res.json(err, '+++++++++++++++++++++++++++++++++++')
+                res.status(404).sen(err)
             }
     },
     addWorker: async function(req, res) {
