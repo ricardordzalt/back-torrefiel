@@ -39,8 +39,8 @@ module.exports = {
         const id = req.params.idClient
         const client = await  Client.findById(req.params.idClient)
         const body = req.body
-        // const newService = new Service(description, status, priority, amount, startHours, startDate, finalized, numService, numDeliveryNote, numBill, acivities, note, descriptionShort)
-        res.status(200).send({id,client,body})
+        const newService = new Service(body)
+        res.status(200).send({id,client,body, newService})
 
             // try {
             //     const { description, status, priority, amount, startHours, startDate, finalized, numService, numDeliveryNote, numBill, acivities, note, descriptionShort } = req.body
