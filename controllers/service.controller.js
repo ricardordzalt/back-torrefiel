@@ -37,9 +37,9 @@ module.exports = {
     },
     register: async function(req, res) {
         const id = req.params.idClient
-        // const client = await  Client.findById(req.params.id)
+        const client = await  Client.findById(req.params.id)
         // const newService = new Service(description, status, priority, amount, startHours, startDate, finalized, numService, numDeliveryNote, numBill, acivities, note, descriptionShort)
-        res.status(200).send({id})
+        res.status(200).send({id,client})
 
             // try {
             //     const { description, status, priority, amount, startHours, startDate, finalized, numService, numDeliveryNote, numBill, acivities, note, descriptionShort } = req.body
