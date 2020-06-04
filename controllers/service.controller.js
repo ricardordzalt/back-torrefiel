@@ -16,8 +16,8 @@ module.exports = {
         .catch(err => res.status(404).json('Error' + err));
     },
     destroy: function(req, res){
-        Client.findByIdAndDelete(req.params.id)
-        .then(() => res.json('Client delete!!'))
+        Service.findByIdAndDelete(req.params.id)
+        .then(() => res.json('Service delete!!'))
         .catch(err => res.status(404).json('Error' + err));
     },
     edit: function(req, res){
