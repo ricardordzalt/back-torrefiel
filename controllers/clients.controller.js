@@ -32,11 +32,14 @@ module.exports = {
         })
         .catch(err => res.status(404).json('Error' + err));
     },
-    register: function(req, res) {
+    register: async function(req, res) {
             const newClient = new CLient(req.body)
-            const user = req.body
+            
             newClient.save()
-                .then(() => res.status(200).send({message: 'User add!', user}))
+                .then(() => {
+                    const client = await CLient.findById(req.email);
+                    res.status(200).send({message: 'User add!', client})
+            })
                 .catch(err => res.status(404).json('Error' + err))
     },
     services: async function(req, res) {
