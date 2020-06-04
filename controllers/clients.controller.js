@@ -1,23 +1,23 @@
-const CLient = require('../models/clients.model')
+const Client = require('../models/clients.model')
 
 module.exports = {
     all: function(req, res) {
-        CLient.find()
+        Client.find()
             .then(clients => res.status(200).json(clients))
             .catch(err => res.status.status(404).json('Error' + err))
     },
     viewOne: function(req, res){
-        CLient.findById(req.params.numClient)
+        Client.findById(req.params.numClient)
         .then(client => res.json(client))
         .catch(err => res.status(404).json('Error' + err));
     },
     destroy: function(req, res){
-        CLient.findByIdAndDelete(req.params.id)
+        Client.findByIdAndDelete(req.params.id)
         .then(() => res.json('Client delete!!'))
         .catch(err => res.status(404).json('Error' + err));
     },
     edit: function(req, res){
-        CLient.findById(req.params.id)
+        Client.findById(req.params.id)
         .then(client => {
             client.email = req.body.email
             client.name = req.body.name
@@ -33,11 +33,11 @@ module.exports = {
         .catch(err => res.status(404).json('Error' + err));
     },
     register: async function(req, res) {
-            const newClient = new CLient(req.body)
+            const newClient = new Client(req.body)
             
             newClient.save()
                 .then(() => {
-                    Client.findById(req.email)
+                    Client.find(req.email)
                         .then(res => {
                             res.status(200).send({message: 'User add!'})
                         })
@@ -48,7 +48,7 @@ module.exports = {
     },
     services: async function(req, res) {
         try {
-            const client = await (await CLient.findById(req.params.id)).execPopulate('services')
+            const client = await (await Client.findById(req.params.id)).execPopulate('services')
             res.json(client)
         } catch(err) {
             res.json('Error ' + err)
