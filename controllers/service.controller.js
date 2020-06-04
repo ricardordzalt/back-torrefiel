@@ -35,15 +35,11 @@ module.exports = {
         })
         .catch(err => res.status(404).json('Error' + err));
     },
-    register: async function(req, res) {
+    register: function(req, res) {
         const id = req.params.idClient
-        const client = await  Client.findById(req.params.id)
-        const newService = new Service(description, status, priority, amount, startHours, startDate, finalized, numService, numDeliveryNote, numBill, acivities, note, descriptionShort)
-        res.status(200).send({
-            id,
-            client,
-            newService
-    })
+        // const client = await  Client.findById(req.params.id)
+        // const newService = new Service(description, status, priority, amount, startHours, startDate, finalized, numService, numDeliveryNote, numBill, acivities, note, descriptionShort)
+        res.status(200).send({id})
 
             // try {
             //     const { description, status, priority, amount, startHours, startDate, finalized, numService, numDeliveryNote, numBill, acivities, note, descriptionShort } = req.body
