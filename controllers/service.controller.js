@@ -1,5 +1,6 @@
 const Client = require('../models/clients.model')
 const Service = require('../models/service.model')
+const User = require('../models/user.model')
 
 
 
@@ -36,47 +37,79 @@ module.exports = {
         .catch(err => res.status(404).json('Error' + err));
     },
     register: async function(req, res) {
-        const id = req.params.idClient
-        const client = await  Client.findById(req.params.idClient)
-        const body = req.body
-        const newService = new Service(body)
-        res.status(200).send({id,client,body, newService})
+        
 
-            // try {
-            //     const { description, status, priority, amount, startHours, startDate, finalized, numService, numDeliveryNote, numBill, acivities, note, descriptionShort } = req.body
-            //     const id = req.params.id
+            try {
+
+
+                // id del cliente
+                const id = req.params.idClient
+
+                // Buscamos el cliente
+                const client = await  Client.findById(id)
                 
-            //     const client = await  Client.findById(req.params.id)
-            //     const newService = new Service(description, status, priority, amount, startHours, startDate, finalized, numService, numDeliveryNote, numBill, acivities, note, descriptionShort)
-            //     // newService.client = client
-            //     // await newService.save()
+                // datos del servicio que llegan desde el front
+               
+                const { activities, 
+                        amount, 
+                        description, 
+                        descriptionShort, 
+                        note, 
+                        numBill, 
+                        numDeliveryNote, 
+                        priority, 
+                        startDate, 
+                        startHours,
+                        status 
+                    } = req.body
+                
+                // cargamos el modelo sevice con los datos recividos
+                const newService = new Service(req.body)
 
-            //     // client.services.push(newService)
-            //     // await client.save()
-            //     // res.status(200).send(newService)
-            //     res.status(200).send({
-            //         id,
-            //         client,
-            //         newService
-            // })
-            // }
-            // catch(err) {
-            //     res.status(404).send({
-            //         menssages: 'hubo un error',
-            //         error: err
-            // })
-            // }
+                // a nuestro servicio le agregamos el cliente
+                newService.client = client
+                // // guadamos el nuevo servicio
+                Service.find()
+                    .then(async function(clients) {
+                        console.log(clients.length)
+                        newService.numService = clients.length + 1
+                        
+                        await newService.save()
+
+                        console.log(newService)
+
+
+                    })
+                    .catch(err => res.status.status(404).json('Error' + err))
+                
+                // // al cliente le agregamos el nuevo servicio
+                client.services.push(newService)
+                // // guardamos el cliente
+                await client.save()
+                
+                res.status(200).send({newService})
+                
+            }
+            catch(err) {
+                res.status(404).send({
+                    menssages: 'hubo un error',
+                    error: err
+            })
+            }
     },
     addWorker: async function(req, res) {
         try {
-            let userId = req.params.idUser
             let serviceId = req.params.idService
-            const user = await User.findById(userId)
+            let workers = req.body.workers
             const service = await Service.findById(serviceId)
-
-            user.works.push(service)
-            service.workers.push(user)
-            await user.save()
+            workers.forEach( async function(element) {
+                let worker = await User.findById(element)
+                
+                worker.works.push(service)
+                service.workers.push(worker)
+                await user.save()
+            });
+    
             await service.save()
 
 

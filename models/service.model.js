@@ -6,7 +6,7 @@ const servicesSchema = new Schema({
     description: {
         type: String
     },
-    numService: Number,
+    numService: { type: Number, default: 0 },
     numDeliveryNote: Number,
     numBill: Number,
     status: String,
@@ -15,7 +15,7 @@ const servicesSchema = new Schema({
     startHours: String,
     startDate: Date,
     finalized: Date,
-    acivities:String,
+    activities: String,
     note: String,
     descriptionShort: String,
     client: {
@@ -31,6 +31,11 @@ const servicesSchema = new Schema({
     timestamps: true,
 });
 
-const Clients = mongoose.model('Service', servicesSchema)
 
-module.exports = Clients;
+
+const Service = mongoose.model('Service', servicesSchema)
+
+
+
+
+module.exports = Service;
