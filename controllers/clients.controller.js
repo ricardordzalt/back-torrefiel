@@ -48,8 +48,11 @@ module.exports = {
     },
     services: async function(req, res) {
         try {
-            const client = await (await Client.findById(req.params.id)).execPopulate('services')
-            res.json(client)
+            if(req.params.id) {
+                const client = await (await Client.findById(req.params.id)).execPopulate('services')
+                res.json(client)
+            }
+            
         } catch(err) {
             res.json('Error ' + err)
         }

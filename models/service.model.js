@@ -6,18 +6,43 @@ const servicesSchema = new Schema({
     description: {
         type: String
     },
-    numService: { type: Number, default: 0 },
-    numDeliveryNote: Number,
-    numBill: Number,
-    status: String,
-    priority: String,
-    amount: Number,
-    startHours: String,
-    startDate: Date,
-    finalized: Date,
-    activities: String,
-    note: String,
-    descriptionShort: String,
+    numService: { 
+        type: Number, 
+        default: 0 
+    },
+    numDeliveryNote: {
+        type: Number
+    },
+    numBill: {
+        type: Number
+    },
+    status: {
+        type: String
+    },
+    priority: {
+        type: String
+    },
+    amount: {
+        type: Number
+    },
+    startHours: {
+        type: String
+    },
+    startDate: {
+        type: Date
+    },
+    finalized: {
+        type: Date
+    },
+    activities: {
+        type: String
+    },
+    note: {
+        type:String
+    },
+    descriptionShort: {
+        type:String
+    },
     client: {
         type: Schema.Types.ObjectId,
         ref: 'Client'

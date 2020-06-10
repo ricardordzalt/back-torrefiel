@@ -11,13 +11,37 @@ const clientsSchema = new Schema({
     lastName: {
         type: String
     },
-    direction: String,
-    province: String,
-    municipality: String,
-    postalcode: Number,
-    phone: {
+    nif: {
+        type: String
+    },
+    companyName:{
+        type: String
+    },
+    direction:{
+        type: String
+    },
+    province: {
+        type: String
+    },
+    municipality:{
+        type: String
+    },
+    postalcode:{
         type: Number
     },
+    phone_1: {
+        type: Number
+    },
+    phone_2: {
+        type: Number
+    },
+    externalNumber: {
+        type: Number
+    },
+    internalNumber: {
+        type: Number
+    }
+    ,
     email: {
         type: String
     },
