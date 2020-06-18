@@ -26,7 +26,7 @@ const clientsSchema = new Schema({
     municipality:{
         type: String
     },
-    postalcode:{
+    postalCode:{
         type: Number
     },
     phone_1: {

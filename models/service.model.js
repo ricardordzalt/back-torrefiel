@@ -40,9 +40,6 @@ const servicesSchema = new Schema({
     note: {
         type:String
     },
-    descriptionShort: {
-        type:String
-    },
     direction: {
         type: String
     },
@@ -53,6 +50,15 @@ const servicesSchema = new Schema({
         type: String
     },
     typeIva: {
+        type: Number
+    },
+    province: {
+        type: String
+    },
+    municipality: {
+        type: String
+    },
+    postalCode: {
         type: Number
     },
     client: {

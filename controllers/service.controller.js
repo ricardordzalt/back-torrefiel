@@ -56,7 +56,6 @@ module.exports = {
                 const { activities, 
                         amount, 
                         description, 
-                        descriptionShort, 
                         note, 
                         numBill, 
                         numDeliveryNote, 
@@ -64,17 +63,45 @@ module.exports = {
                         startDate, 
                         startHours,
                         status,
-                        numService
+                        numService,
+                        numberInternal,
+                        numberExternal,
+                        direction,
+                        typeIva,
+                        province,
+                        municipality,
+                        postalCode
+
+
                     } = req.body
                 
                 // cargamos el modelo sevice con los datos recividos
-                const newService = new Service(req.body)
+                const newService = new Service({ activities, 
+                    amount, 
+                    description, 
+                    note, 
+                    numBill, 
+                    numDeliveryNote, 
+                    priority, 
+                    startDate, 
+                    startHours,
+                    status,
+                    numService,
+                    numberInternal,
+                    numberExternal,
+                    direction,
+                    typeIva,
+                    province,
+                    municipality,
+                    postalCode
+
+
+                } )
 
                 // a nuestro servicio le agregamos el cliente
                 newService.client = client
                 // // guadamos el nuevo servicio
                 
-                        newService.numService = clients.length + 1
                         
                         await newService.save()
                             .then(() => res.status(200).send({message: 'Servicio agregado satisfacoriamente'}))
