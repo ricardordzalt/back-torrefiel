@@ -52,6 +52,9 @@ const servicesSchema = new Schema({
     numberExternal: {
         type: String
     },
+    typeIva: {
+        type: Number
+    }
     client: {
         type: Schema.Types.ObjectId,
         ref: 'Client'
