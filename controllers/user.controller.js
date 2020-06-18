@@ -153,7 +153,8 @@ module.exports = {
                         // poner clave secreta en una variable de entorno
                             jwt.sign(payLoad, config.app.secret_token , (err, token) => {
                                 if(err) return res.status(500).json({Error : err})
-                                res.status(200).json({message: 'aceso consedido', token})
+                                const name = user.name
+                                res.status(200).json({message: 'aceso consedido', token, name})
                             })
                     })
                     .catch(err => res.status(500).send({message: 'acá hay un error ', err}))
