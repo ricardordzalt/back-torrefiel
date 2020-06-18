@@ -152,8 +152,6 @@ module.exports = {
     },
     downloadImg: function(req, res) {
         const nameImg = req.params.nameImg
-
-        
         res.download(`./storage/images/${nameImg}`)
 
     }

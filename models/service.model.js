@@ -43,6 +43,15 @@ const servicesSchema = new Schema({
     descriptionShort: {
         type:String
     },
+    direction: {
+        type: String
+    },
+    numberInternal: {
+        type: String 
+    },
+    numberExternal: {
+        type: String
+    },
     client: {
         type: Schema.Types.ObjectId,
         ref: 'Client'
@@ -58,7 +67,7 @@ const servicesSchema = new Schema({
 },
 {
     timestamps: true,
-});
+});{}
 
 
 
