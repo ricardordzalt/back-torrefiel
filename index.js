@@ -107,7 +107,7 @@ app.get('/coso', function(req, res){
 
 //Middlewares
 app.use(morgan('dev'));
-app.use(cors());
+//app.use(cors());
 app.use(express.json());
 //Routes
 
