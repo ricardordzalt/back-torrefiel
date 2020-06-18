@@ -40,6 +40,20 @@ module.exports = {
         })
         .catch(err => res.status(404).json('Error' + err));
     },
+    editRol: async function(req, res) {
+        if(req.params.id) {
+            const user = await User.findById(req.params.id) 
+            user.rol = req.body.rol
+                try {
+                    await user.save()
+                    return res.status(2000).send({message: "rol cambiado satisfactoriante."})
+                } catch(err) {
+                    return res.status(403).send({Error: "No se pudo cambiar el rol", err})
+                }
+        }else {
+           return res.status(404).send({Error: "Pase el id del usuario al que desea cambiar el rol"})
+        }
+    },
     confirmation: function (req, res) {
         let token = req.params.token;
         jwt.verify(token, config.app.secret_token , (err, decode) => {
@@ -141,8 +155,6 @@ module.exports = {
                                 if(err) return res.status(500).json({Error : err})
                                 res.status(200).json({message: 'aceso consedido', token})
                             })
-                        
-                        
                     })
                     .catch(err => res.status(500).send({message: 'acá hay un error ', err}))
             })

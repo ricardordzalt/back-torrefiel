@@ -1,5 +1,9 @@
 const nodemailer = require("nodemailer")
 const config = require('../config')
+const multer = require('multer')
+const path = require('path')
+const mkdirp = require('mkdirp');
+const moment = require('moment')
 function sendEmail (req, res, html) {
     async function main() {
         // Generate test SMTP service account from ethereal.email
@@ -39,5 +43,33 @@ function sendEmail (req, res, html) {
     
     main().catch(console.error);
 }
+const confImg = multer.diskStorage({
+    destination: function (request, file, cb) {
+        mkdirp('../storage/images', function(err, folder) { // path exists unless there was an error 
+            
+            cb(null,path.join(__dirname, '../storage/images'));
+            console.log(path.join(__dirname, '../storage/images'))
+        })
+    },
+    filename: function (req, file, cb) {
+        cb(null,  `img-${Date.now()}.${file.mimetype.split('/')[1]}`)
+      }
+    });
+    
+const confPdf = multer.diskStorage({
+    destination:  function (req,file,cb){//Indica la carpeta de destino
+        mkdirp(`storage/pdf/${moment().format('YYYY-MM-DD').split('-')[0]}/${moment().format('YYYY-MM-DD').split('-')[1]}/${moment().format('YYYY-MM-DD').split('-')[2]}`, function(err, folder) { // path exists unless there was an error 
+            let newFolder = `storage/pdf/${moment().format('YYYY-MM-DD').split('-')[0]}/${moment().format('YYYY-MM-DD').split('-')[1]}/${moment().format('YYYY-MM-DD').split('-')[2]}`
+            cb(null,path.join(__dirname, `${newFolder}`));
+            console.log(`storage/pdf/${moment().format('YYYY-MM-DD').split('-')[0]}/${moment().format('YYYY-MM-DD').split('-')[1]}/${moment().format('YYYY-MM-DD').split('-')[2]}`)
+        })
+       
+    },
+    filename: function (req, file, cb) {
+      cb(null,  `pdf-${Date.now()}.${file.mimetype.split('/')[1]}`)
+    }
+  })
+    // Function to upload project images
+const uploadImages = multer({confImg}).any("images");
 
-module.exports = { sendEmail }
+module.exports = { sendEmail, uploadImages }

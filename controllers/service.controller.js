@@ -1,6 +1,7 @@
 const Client = require('../models/clients.model')
 const Service = require('../models/service.model')
 const User = require('../models/user.model')
+const { uploadImages } = require('../services')
 
 
 
@@ -136,5 +137,22 @@ module.exports = {
         } catch(err) {
             res.json('Error ' + err)
         }
+    },
+   images: async function(req, res) {
+        try {
+            const imagenes = await (await Service.findById(req.params.idService)).execPopulate('imagenes')             
+            res.status(200).json(imagenes)
+        } catch(err) {
+            res.json('Error ' + err)
+        }
+
+    },
+    addPdf: function(req, res) {
+
+    },
+    downloadImg: function(req, res) {
+        const nameImg = req.params.nameImg
+
+        res.download(`../storage/images/${nameImg}`)
     }
 }

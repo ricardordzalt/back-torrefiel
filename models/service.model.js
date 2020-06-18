@@ -50,6 +50,10 @@ const servicesSchema = new Schema({
     workers: [{
         type: Schema.Types.ObjectId,
         ref: 'User'
+    }],
+    imagenes: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Imagen'
     }]
 },
 {
