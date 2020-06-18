@@ -47,7 +47,9 @@ module.exports = {
                 const id = req.params.idClient
 
                 // Buscamos el cliente
-                const client = await  Client.findById(id)
+                if(id){
+
+                    const client = await  Client.findById(id)
                 
                 // datos del servicio que llegan desde el front
                
@@ -61,7 +63,8 @@ module.exports = {
                         priority, 
                         startDate, 
                         startHours,
-                        status 
+                        status,
+                        numService
                     } = req.body
                 
                 // cargamos el modelo sevice con los datos recividos
@@ -70,18 +73,17 @@ module.exports = {
                 // a nuestro servicio le agregamos el cliente
                 newService.client = client
                 // // guadamos el nuevo servicio
-                Service.find()
-                    .then(async function(clients) {
-                        console.log(clients.length)
+                
                         newService.numService = clients.length + 1
                         
                         await newService.save()
+                            .then(() => res.status(200).send({message: 'Servicio agregado satisfacoriamente'}))
+                            .catch(err => res.send({Error: 'Error al guardar el servicio', err}))
 
                         console.log(newService)
 
 
-                    })
-                    .catch(err => res.status.status(404).json('Error' + err))
+                    
                 
                 // // al cliente le agregamos el nuevo servicio
                 client.services.push(newService)
@@ -89,6 +91,12 @@ module.exports = {
                 await client.save()
                 
                 res.status(200).send({newService})
+                
+
+                }
+                else {
+                    res.send({Error: 'No estas pasnado el id del cliente'})
+                }
                 
             }
             catch(err) {
