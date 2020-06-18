@@ -25,7 +25,7 @@ function sendEmail (req, res, html) {
         
         // send mail with defined transport object
         let info = await transporter.sendMail({
-        from: '"José Grasmin👻" <j.urbina.0179@gmail.com>', // sender address
+        from: '"José Grasmin👻"', // sender address
         to: req.email, // list of receivers
         subject: "verifica tu cuenta ✔", // Subject line
         text: "Hello " + req.name, // plain text body
