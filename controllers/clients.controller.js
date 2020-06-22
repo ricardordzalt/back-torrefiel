@@ -37,7 +37,7 @@ module.exports = {
             
             newClient.save()
                 .then(() => {
-                    Client.findOne(req.email)
+                    Client.findOne(req.body.email)
                         .then(client => {
                             res.status(200).send({message: 'User add!', client})
                         })
