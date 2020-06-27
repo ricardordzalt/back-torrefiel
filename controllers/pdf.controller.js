@@ -33,35 +33,20 @@ module.exports = {
         })
 
     },
-    add: async function(req, res) {
-            try {
-                if(req.params.idService) {
-                    const service = await Service.findById(req.params.idService)
-                    const images = req.files
-                    const {user, description} = req.body
-
-                    const newImg = new Imagen({user, description})
-                    images.forEach(element => {
-                        console.log(`${host}/public/${element.filename}`)
-                        newImg.images.push(`${host}/public/${element.filename}`)
-                    });
-                    newImg.service = service
-                    service.imagenes.push(newImg)
-                    await service.save()
-                    await newImg.save()
-
-                    res.send({images})
-                 
-                //  res.send({message: 'imaages guardadas exitosamente'})
-                } else {
-                    res.send({Error: 'No estás pasano el id del servicio' })
-                }
-                
-                
-            }
-            catch(err) {
-                res.json(err)
-            }
+    add: function(req, res) {
+        const pdf = req.files
+        // console.log(pdf)
+       pdf.forEach(element => {
+            const path =  element.path
+            let year = path.split('\\')[8]
+            let month = path.split('\\')[9]
+            let day = path.split('\\')[10]
+            let namePdf = element.filename
+            let ruta = `${year}/${month}/${day}/${namePdf}`
+            res.send(ruta)
+        
+       });
+        //    res.send(pdf)
     }
 
 }

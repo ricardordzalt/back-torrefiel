@@ -2,6 +2,9 @@ const Client = require('../models/clients.model')
 const Service = require('../models/service.model')
 const User = require('../models/user.model')
 const { uploadImages } = require('../services')
+const fs = require('fs')
+const path = require('path')
+const zipFolder = require('zip-a-folder');
 
 
 
@@ -182,12 +185,64 @@ module.exports = {
         }
 
     },
-    addPdf: function(req, res) {
-
-    },
     downloadImg: function(req, res) {
         const nameImg = req.params.nameImg
         res.download(`./storage/images/${nameImg}`)
 
+    },
+    addPdf: function(req, res) {
+
+    },
+    downloadPdf: function(req, res) {
+        
+        const ruta = req.params.folder.split('-')
+        if(ruta.length == 1) var folder = path.join(__dirname, `../storage/pdf/${req.params.folder}`) 
+        else{
+            let year = ruta[0]
+            let month = ruta[1]
+            folder = path.join(__dirname, `../storage/pdf/${year}/${month}`) 
+        }
+        console.log(ruta)
+        console.log(folder)
+
+        try {
+            fs.statSync(folder)
+            console.log('file or directory exists');
+            class ZipAFolder {
+        
+                static main() {
+                    zipFolder.zipFolder(folder,folder+'.zip',  function(err) {
+                        if(err) {
+                            console.log('Something went wrong!', err);
+                        }else{
+                            
+                            console.log('carpeta comprimida satisfactoriamene!!')
+
+                           res.download(`${folder}.zip`)
+                           
+                           setTimeout(function(){ 
+                                fs.unlink(folder+'.zip', (error) => {
+                                    if(error) {
+                                        console.log('Ha ocurrido un error')
+                                    }else{
+                                        console.log('archivo zip eliminado ')
+                                    }
+                                    
+                                })
+                            }, 5000);
+                            
+                        }
+                    });
+                }
+            }
+            
+            ZipAFolder.main();
+        }
+        catch (err) {
+            if (err.code === 'ENOENT') {
+                res.status(404).send({Error: 'La carpeta solicitada no existe.'})
+                console.log('file or directory does not exist');
+            }
+        }
     }
 }
