@@ -1,7 +1,7 @@
 const User = require('../models/user.model')
 const Imagen = require('../models/img.model');
 const Service = require('../models/service.model');
-const { host} = require('../config').app
+const { host } = require('../config').app
 const fs = require('fs')
 
 
@@ -33,19 +33,22 @@ module.exports = {
         })
 
     },
-    add: function(req, res) {
-        const pdf = req.files
-        // console.log(pdf)
-       pdf.forEach(element => {
-            const path =  element.path
+    add: async function(req, res) {
+        const pdf = req.file
+        const idService = req.params.idService
+
+        const service = await Service.findById(idService)
+        
+    
+            const path =  pdf.path
             let year = path.split('\\')[8]
             let month = path.split('\\')[9]
             let day = path.split('\\')[10]
-            let namePdf = element.filename
-            let ruta = `${year}/${month}/${day}/${namePdf}`
+            let namePdf = pdf.filename
+            let ruta = `${host}/public/pdf/${year}/${month}/${day}/${namePdf}`
+            
             res.send(ruta)
-        
-       });
+    
         //    res.send(pdf)
     }
 

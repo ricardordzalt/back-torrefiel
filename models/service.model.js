@@ -11,7 +11,7 @@ const servicesSchema = new Schema({
         default: 0 
     },
     numDeliveryNote: {
-        type: Number
+        type: String
     },
     numBill: {
         type: Number
@@ -72,7 +72,13 @@ const servicesSchema = new Schema({
     imagenes: [{
         type: Schema.Types.ObjectId,
         ref: 'Imagen'
-    }]
+    }],
+    albaram: {
+       type: String
+    },
+    factura: {
+        type: String
+    }
 },
 {
     timestamps: true,

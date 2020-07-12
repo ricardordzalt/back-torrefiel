@@ -29,10 +29,10 @@ const clientsSchema = new Schema({
     postalCode:{
         type: Number
     },
-    phone_1: {
+    phoneOne: {
         type: Number
     },
-    phone_2: {
+    phoneTwo: {
         type: Number
     },
     externalNumber: {

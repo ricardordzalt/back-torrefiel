@@ -56,50 +56,52 @@ module.exports = {
                 
                 // datos del servicio que llegan desde el front
                
-                const { activities, 
-                        amount, 
-                        description, 
-                        note, 
-                        numBill, 
-                        numDeliveryNote, 
-                        priority, 
-                        startDate, 
-                        startHours,
-                        status,
-                        numService,
-                        numberInternal,
-                        numberExternal,
-                        direction,
-                        typeIva,
-                        province,
-                        municipality,
-                        postalCode
+                // const { activities, 
+                //         amount, 
+                //         description, 
+                //         note, 
+                //         numBill, 
+                //         numDeliveryNote, 
+                //         priority, 
+                //         startDate, 
+                //         startHours,
+                //         status,
+                //         numService,
+                //         numberInternal,
+                //         numberExternal,
+                //         direction,
+                //         typeIva,
+                //         province,
+                //         municipality,
+                //         postalCode
 
 
-                    } = req.body
-                
+                //     } = req.body
+
+                    const payload = req.body
+                    const newService = new Service(payload)
                 // cargamos el modelo sevice con los datos recividos
-                const newService = new Service({ activities, 
-                    amount, 
-                    description, 
-                    note, 
-                    numBill, 
-                    numDeliveryNote, 
-                    priority, 
-                    startDate, 
-                    startHours,
-                    status,
-                    numService,
-                    numberInternal,
-                    numberExternal,
-                    direction,
-                    typeIva,
-                    province,
-                    municipality,
-                    postalCode
+                // const newService = new Service({ activities, 
+                //     amount, 
+                //     description, 
+                //     note, 
+                //     numBill, 
+                //     numDeliveryNote, 
+                //     priority, 
+                //     startDate, 
+                //     startHours,
+                //     status,
+                //     numService,
+                //     numberInternal,
+                //     numberExternal,
+                //     direction,
+                //     typeIva,
+                //     province,
+                //     municipality,
+                //     postalCode
 
 
-                } )
+                // } )
 
                 // a nuestro servicio le agregamos el cliente
                 newService.client = client
@@ -206,7 +208,8 @@ module.exports = {
         console.log(folder)
 
         try {
-            fs.statSync(folder)
+            if(!fs.statSync(folder)) return res.status(404).send({Error: 'Archivo no encontrado'})
+
             console.log('file or directory exists');
             class ZipAFolder {
         
