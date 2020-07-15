@@ -42,7 +42,6 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    isVerify: Boolean,
     works: [{
         type: Schema.Types.ObjectId,
         ref: 'Service'
