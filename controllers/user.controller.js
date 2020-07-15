@@ -87,18 +87,11 @@ module.exports = {
         })
     },
     register: async function(req, res){
-        const {name, userName, lastName, motherLastName, phone } = req.body
+        const {name, userName, lastName, motherLastName, phone, color } = req.body
         req.body.rol = req.body.rol ? "Administrador" : "Normal";
         // async..await is not allowed in global scope, must use a wrapper
-        let Req = req.body
-        payLoad = {
-            name: req.body.name,
-            userName: req.body.userName,
-            phone: req.body.phone
-        }
-        
         //const newUser = new User({ userName, name, phone, rol, lastName, motherLastName })
-        const newUser = new User(req.body)
+        const newUser = new User({ name, userName, lastName, motherLastName, phone, color })
 
         let userDB = await User.findOne({ $or: [
             { phone },

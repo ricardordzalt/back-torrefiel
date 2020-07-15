@@ -42,6 +42,10 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    color: {
+        type: String,
+        required: true
+    },
     works: [{
         type: Schema.Types.ObjectId,
         ref: 'Service'
