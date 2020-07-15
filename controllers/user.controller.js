@@ -88,10 +88,10 @@ module.exports = {
     },
     register: async function(req, res){
         const {name, userName, lastName, motherLastName, phone, color } = req.body
-        req.body.rol = req.body.rol ? "Administrador" : "Normal";
+        const rol = req.body.rol ? "Administrador" : "Normal";
         // async..await is not allowed in global scope, must use a wrapper
         //const newUser = new User({ userName, name, phone, rol, lastName, motherLastName })
-        const newUser = new User({ name, userName, lastName, motherLastName, phone, color })
+        const newUser = new User({ name, userName, lastName, motherLastName, phone, color, rol })
 
         let userDB = await User.findOne({ $or: [
             { phone },
