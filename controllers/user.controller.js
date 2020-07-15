@@ -87,51 +87,40 @@ module.exports = {
         })
     },
     register: async function(req, res){
-            const {name, userName, lastName, motherLastName, email} = req.body
-            const phone = req.body.phone;
-            const rol = 'admin';
-            const isVerify = false
-            // async..await is not allowed in global scope, must use a wrapper
-            let Req = req.body
-            payLoad = {
-                name: req.body.name,
-                userName: req.body.userName,
-                email: req.body.email,
-                isVerify: false,
-                phone: req.body.phone
-            }
-            let verify = jwt.sign(payLoad, config.app.secret_token , { expiresIn: '3h' });
-            console.log('Token: ', verify)
+        const {name, userName, lastName, motherLastName, phone } = req.body
+        req.body.rol = req.body.rol ? "Administrador" : "Normal";
+        // async..await is not allowed in global scope, must use a wrapper
+        let Req = req.body
+        payLoad = {
+            name: req.body.name,
+            userName: req.body.userName,
+            phone: req.body.phone
+        }
+        
+        //const newUser = new User({ userName, name, phone, rol, lastName, motherLastName })
+        const newUser = new User(req.body)
 
-            const html = "<a href="+config.app.host+"user/confirmation/"+verify+">verify your accuont</a>";
-            // const html = SetMailing(`${config.app.host}user/confirmation/${verify}`);
-            const newUser = new User({userName, email, name, phone, rol, isVerify, lastName, motherLastName})
-                               
-            let userDB = await User.findOne({ $or: [
-                { email },
-                { phone },
-                {userName}
-            ]})
+        let userDB = await User.findOne({ $or: [
+            { phone },
+            { userName }
+        ]})
 
-          if (userDB) {
-            if (userName == userDB.userName) {
-                return res.send({ message: 'UserName already exists' })
-              }else if (email == userDB.email) {
-                return res.send({ message: 'E-mail already exists' })
-              }else if (phone == userDB.phone) {
-                return res.send({ message: 'phoneNumber already exists' })
-              } 
+      if (userDB) {
+        if (userName == userDB.userName) {
+            return res.send({ message: 'UserName already exists' })
+          }else if (phone == userDB.phone) {
+            return res.send({ message: 'phoneNumber already exists' })
+          } 
 
-          }
+      }
 
-           
-            newUser.save()
-                .then(() => {
-                    sendEmail(Req, res, html)
-                    res.status(200).json('User add, hemos enviado un email para verificarlo')
-                })
-                .catch(err => res.status(404).json('Error' + err));
-    },
+       
+        newUser.save()
+            .then(() => {
+                res.status(200).json('Usuario agregado exitosamente')
+            })
+            .catch(err => res.status(403).json('Error' + err));
+},
     login: function(req, res) {
         let userName = req.body.userName
         let password = req.body.password
