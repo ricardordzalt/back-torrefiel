@@ -141,20 +141,34 @@ module.exports = {
     addWorker: async function(req, res) {
         try {
             let serviceId = req.params.idService
-            let workers = req.body.workers
-            const service = await Service.findById(serviceId)
-            workers.forEach( async function(element) {
-                let worker = await User.findById(element)
-                
-                worker.works.push(service)
-                service.workers.push(worker)
-                await user.save()
-            });
-    
-            await service.save()
+
+            const { startDate, startHours, workers } = req.body;
+            
+            if(workers.length > 0) {
+
+                const service = await Service.findById(serviceId);
+
+                service.workers = workers;
+                service.startDate = startDate;
+                service.startHours = startHours;
+
+                //Se guarda en el modelo del trabajador el trabajo
+                workers.forEach( async function(element) {
+                    let worker = await User.findById(element)
+                    
+                    worker.works.push(service)
+                    //service.workers.push(worker)
+                    await user.save()
+                });
+        
+                await service.save()
 
 
-            res.status(200).send({user, service})
+                res.status(200).send({ service })
+            }else {
+                res.status(200).send({ message: 'No se han seleccionado trabajadores' });
+            }
+
         } catch(err) {
             res.json('Error ' + err)
         }
