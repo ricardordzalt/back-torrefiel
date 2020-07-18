@@ -3,7 +3,9 @@ const Schema = mongoose.Schema;
 
 const clientsSchema = new Schema({
     numClient: {
-        type: Number
+        type: Number,
+        required: true,
+        unique: true
     },
     name: {
         type: String
