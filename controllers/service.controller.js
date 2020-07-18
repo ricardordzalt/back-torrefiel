@@ -163,8 +163,9 @@ module.exports = {
         
                 await service.save()
 
+                const services = await Service.find();
 
-                res.status(200).send({ service })
+                res.status(200).send({ services })
             }else {
                 res.status(200).send({ message: 'No se han seleccionado trabajadores' });
             }
