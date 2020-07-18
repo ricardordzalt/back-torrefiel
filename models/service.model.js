@@ -11,7 +11,7 @@ const servicesSchema = new Schema({
         default: 0 
     },
     numDeliveryNote: {
-        type: String
+        type: Number
     },
     numBill: {
         type: Number
