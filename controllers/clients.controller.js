@@ -27,12 +27,13 @@ module.exports = {
             client.municipality =  req.body.municipality
             client.postalcode = req.body.postalcode
             client.save()
-                .then(() => res.json('Client Update!!'))
+                .then(() => res.status(200).send({message: 'Client Update!', client})
                 .catch(err => res.status(404).json('Error' + err))
         })
         .catch(err => res.status(404).json('Error' + err));
     },
     register: async function(req, res) {
+            
             const newClient = new Client(req.body)
             
             newClient.save()
