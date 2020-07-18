@@ -57,8 +57,6 @@ module.exports = {
                     const services = await Service.findOne().sort({ _id: -1 })
 
                     console.log('services', services);
-
-                    res.send({ services });
                     
                     let newNumDeliveryNote;
                     if(services !== null){
