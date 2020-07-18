@@ -27,7 +27,7 @@ module.exports = {
             client.municipality =  req.body.municipality
             client.postalcode = req.body.postalcode
             client.save()
-                .then(() => res.status(200).send({message: 'Client Update!', client})
+                .then(() => res.status(200).send({message: 'Client Update!', client}))
                 .catch(err => res.status(404).json('Error' + err))
         })
         .catch(err => res.status(404).json('Error' + err));
