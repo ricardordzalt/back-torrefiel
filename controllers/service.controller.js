@@ -61,7 +61,7 @@ module.exports = {
                     res.send({ services });
                     
                     let newNumDeliveryNote;
-                    if(services.length > 0){
+                    if(services !== null){
                         newNumDeliveryNote = services.numDeliveryNote + 1;
                     }else{
                         newNumDeliveryNote = 1;
