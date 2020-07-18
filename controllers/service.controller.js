@@ -60,36 +60,36 @@ module.exports = {
 
                     res.send({ services });
                     
-                    // let newNumDeliveryNote;
-                    // if(services.length > 0){
-                    //     newNumDeliveryNote = services.numDeliveryNote + 1;
-                    // }else{
-                    //     newNumDeliveryNote = 1;
-                    // };
+                    let newNumDeliveryNote;
+                    if(services.length > 0){
+                        newNumDeliveryNote = services.numDeliveryNote + 1;
+                    }else{
+                        newNumDeliveryNote = 1;
+                    };
                     
-                    // req.body.numDeliveryNote = newNumDeliveryNote;
+                    req.body.numDeliveryNote = newNumDeliveryNote;
 
-                    // const payload = req.body
-                    // const newService = new Service(payload)
+                    const payload = req.body
+                    const newService = new Service(payload)
 
-                    // // a nuestro servicio le agregamos el cliente
-                    // newService.client = client
+                    // a nuestro servicio le agregamos el cliente
+                    newService.client = client
 
-                    // // // guadamos el nuevo servicio
-                    // await newService.save()
-                    //     .then(() => res.status(200).send({message: 'Servicio agregado satisfacoriamente'}))
-                    //     .catch(err => res.send({Error: 'Error al guardar el servicio', err}))
+                    // // guadamos el nuevo servicio
+                    await newService.save()
+                        .then(() => res.status(200).send({message: 'Servicio agregado satisfacoriamente'}))
+                        .catch(err => res.send({Error: 'Error al guardar el servicio', err}))
 
-                    // console.log(newService)
+                    console.log(newService)
 
                 
-                    // // // al cliente le agregamos el nuevo servicio
-                    // client.services.push(newService)
+                    // // al cliente le agregamos el nuevo servicio
+                    client.services.push(newService)
 
-                    // // // guardamos el cliente
-                    // await client.save()
+                    // // guardamos el cliente
+                    await client.save()
                     
-                    // res.status(200).send({newService})
+                    res.status(200).send({newService})
                     
 
                 }
