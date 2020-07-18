@@ -54,7 +54,8 @@ module.exports = {
 
                     const client = await  Client.findById(id)
                 
-                    const services = await Service.findOne().sort({ date: -1 }).limit(1)
+                    const services = await Service.findOne().sort({ createdAt: -1 })
+
                     console.log('services', services);
 
                     res.send({ services });
