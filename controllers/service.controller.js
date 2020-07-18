@@ -54,12 +54,12 @@ module.exports = {
 
                     const client = await  Client.findById(id)
                 
-                    const services = await Service.find()
+                    const services = await Service.findOne().sort({created_at: -1})
 
                     console.log('services', services);
 
                     res.send({ services });
-
+                    
                     // let newNumDeliveryNote;
                     // if(services.length > 0){
                     //     newNumDeliveryNote = services.numDeliveryNote + 1;
