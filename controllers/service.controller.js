@@ -54,76 +54,43 @@ module.exports = {
 
                     const client = await  Client.findById(id)
                 
-                // datos del servicio que llegan desde el front
-               
-                // const { activities, 
-                //         amount, 
-                //         description, 
-                //         note, 
-                //         numBill, 
-                //         numDeliveryNote, 
-                //         priority, 
-                //         startDate, 
-                //         startHours,
-                //         status,
-                //         numService,
-                //         numberInternal,
-                //         numberExternal,
-                //         direction,
-                //         typeIva,
-                //         province,
-                //         municipality,
-                //         postalCode
+                    const services = await Service.findOne().sort({created_at: -1})
 
+                    console.log('services', services);
 
-                //     } = req.body
-
-                    const payload = req.body
-                    const newService = new Service(payload)
-                // cargamos el modelo sevice con los datos recividos
-                // const newService = new Service({ activities, 
-                //     amount, 
-                //     description, 
-                //     note, 
-                //     numBill, 
-                //     numDeliveryNote, 
-                //     priority, 
-                //     startDate, 
-                //     startHours,
-                //     status,
-                //     numService,
-                //     numberInternal,
-                //     numberExternal,
-                //     direction,
-                //     typeIva,
-                //     province,
-                //     municipality,
-                //     postalCode
-
-
-                // } )
-
-                // a nuestro servicio le agregamos el cliente
-                newService.client = client
-                // // guadamos el nuevo servicio
-                
-                        
-                        await newService.save()
-                            .then(() => res.status(200).send({message: 'Servicio agregado satisfacoriamente'}))
-                            .catch(err => res.send({Error: 'Error al guardar el servicio', err}))
-
-                        console.log(newService)
-
-
+                    res.send({ services });
                     
+                    // let newNumDeliveryNote;
+                    // if(services.length > 0){
+                    //     newNumDeliveryNote = services.numDeliveryNote + 1;
+                    // }else{
+                    //     newNumDeliveryNote = 1;
+                    // };
+                    
+                    // req.body.numDeliveryNote = newNumDeliveryNote;
+
+                    // const payload = req.body
+                    // const newService = new Service(payload)
+
+                    // // a nuestro servicio le agregamos el cliente
+                    // newService.client = client
+
+                    // // // guadamos el nuevo servicio
+                    // await newService.save()
+                    //     .then(() => res.status(200).send({message: 'Servicio agregado satisfacoriamente'}))
+                    //     .catch(err => res.send({Error: 'Error al guardar el servicio', err}))
+
+                    // console.log(newService)
+
                 
-                // // al cliente le agregamos el nuevo servicio
-                client.services.push(newService)
-                // // guardamos el cliente
-                await client.save()
-                
-                res.status(200).send({newService})
-                
+                    // // // al cliente le agregamos el nuevo servicio
+                    // client.services.push(newService)
+
+                    // // // guardamos el cliente
+                    // await client.save()
+                    
+                    // res.status(200).send({newService})
+                    
 
                 }
                 else {
