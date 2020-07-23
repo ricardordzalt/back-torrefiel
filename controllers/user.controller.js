@@ -22,7 +22,16 @@ module.exports = {
     },
     destroy: function(req, res){
         User.findByIdAndDelete(req.params.id)
-        .then(() => res.json('User delete!!'))
+        .then(async (user) => {
+            const services = await Service.find();
+            services.forEach(async service => {
+                const newWorkers = service.workers.filter(worker => JSON.stringify(worker) != JSON.stringify(user._id));
+                service.workers = newWorkers;
+                await service.save();
+            })
+            const users = await User.find();
+            res.send(users);
+        })
         .catch(err => res.status(404).json('Error' + err));
     },
     edit: function(req, res){
@@ -95,24 +104,27 @@ module.exports = {
 
         let userDB = await User.findOne({ $or: [
             { phone },
-            { userName }
+            { userName },
+            { color }
         ]})
 
-      if (userDB) {
-        if (userName == userDB.userName) {
-            return res.send({ message: 'UserName already exists' })
-          }else if (phone == userDB.phone) {
-            return res.send({ message: 'phoneNumber already exists' })
-          } 
+        if (userDB) {
+            if (userName == userDB.userName) {
+                return res.status(400).send('El nombre de usuario ya existe');
+            }else if (phone == userDB.phone) {
+                return res.status(400).send('El teléfono ya existe');
+            }else if (color == userDB.color){
+                return res.status(400).send('Este color ya está en uso');
+            }
 
-      }
+        }
 
        
         newUser.save()
-            .then(() => {
-                res.status(200).json('Usuario agregado exitosamente')
+            .then((user) => {
+                res.send(user);
             })
-            .catch(err => res.status(403).json('Error' + err));
+            .catch(err => res.status(403).send('Ha ocurrido un error'));
 },
     login: function(req, res) {
         let userName = req.body.userName

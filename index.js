@@ -26,7 +26,7 @@ async function initApp() {
         connecBD()
 
         //Listening
-     const server =   app.listen(port, () => console.log(`server on ${host}`) )
+     const server =   app.listen(5001, () => console.log(`server on ${host}`) )
     //  socketServer(server)
     }catch(err) {
         console.error(err)

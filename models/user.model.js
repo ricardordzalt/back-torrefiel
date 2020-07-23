@@ -44,7 +44,8 @@ const userSchema = new Schema({
     },
     color: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     works: [{
         type: Schema.Types.ObjectId,

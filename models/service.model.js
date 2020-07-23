@@ -20,7 +20,7 @@ const servicesSchema = new Schema({
         type: String
     },
     priority: {
-        type: String
+        type: Boolean
     },
     amount: {
         type: Number
@@ -59,6 +59,24 @@ const servicesSchema = new Schema({
         type: String
     },
     postalCode: {
+        type: Number
+    },
+    name: {
+        type: String
+    },
+    lastName: {
+        type: String
+    },
+    motherLastName: {
+        type: String
+    },
+    email: {
+        type: String
+    },
+    phoneOne: {
+        type: Number
+    },
+    phoneTwo: {
         type: Number
     },
     client: {

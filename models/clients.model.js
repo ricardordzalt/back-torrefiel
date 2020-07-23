@@ -13,10 +13,13 @@ const clientsSchema = new Schema({
     lastName: {
         type: String
     },
+    motherLastName: {
+        type: String
+    },
     nif: {
         type: String
     },
-    companyName:{
+    nameCompany:{
         type: String
     },
     direction:{
@@ -37,10 +40,10 @@ const clientsSchema = new Schema({
     phoneTwo: {
         type: Number
     },
-    externalNumber: {
+    numberExternal: {
         type: Number
     },
-    internalNumber: {
+    numberInternal: {
         type: Number
     }
     ,

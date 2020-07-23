@@ -5,6 +5,7 @@ const { uploadImages } = require('../services')
 const fs = require('fs')
 const path = require('path')
 const zipFolder = require('zip-a-folder');
+const { COPYFILE_FICLONE_FORCE } = require('constants')
 
 
 
@@ -34,17 +35,27 @@ module.exports = {
             service.amount = req.body.amount
             service.start = req.body.start
             service.finalized =  req.body.finalized
+            service.name = req.body.name
+            service.lastName = req.body.lastName
+            service.motherLastName = req.body.motherLastName
+            service.direction = req.body.direction
+            service.numberExternal =  req.body.numberExternal
+            service.numberInternal = req.body.numberInternal
+            service.province = req.body.province
+            service.municipality = req.body.municipality
+            
             service.save()
-                .then(() => res.json('Service Update!!'))
+                .then(() => res.send(service))
                 .catch(err => res.status(404).json('Error' + err))
         })
         .catch(err => res.status(404).json('Error' + err));
     },
     register: async function(req, res) {
-        
-
+        // se convierte de string a booleano;
+        console.log('body', req.body);
+        req.body.priority = req.body.priority === 'true';
+    
             try {
-
 
                 // id del cliente
                 const id = req.params.idClient
@@ -56,7 +67,7 @@ module.exports = {
                 
                     const services = await Service.findOne().sort({ _id: -1 })
 
-                    console.log('services', services);
+                    //console.log('services', services);
                     
                     let newNumDeliveryNote;
                     if(services !== null){
@@ -87,8 +98,6 @@ module.exports = {
                     // // guardamos el cliente
                     await client.save()
                     
-                    res.status(200).send({newService})
-                    
 
                 }
                 else {
@@ -107,8 +116,8 @@ module.exports = {
         try {
             let serviceId = req.params.idService
 
-            const { startDate, startHours, workers } = req.body;
-            
+            let { startDate, startHours, workers } = req.body;
+
             if(workers.length > 0) {
 
                 const service = await Service.findById(serviceId);
@@ -118,13 +127,63 @@ module.exports = {
                 service.startHours = startHours;
 
                 //Se guarda en el modelo del trabajador el trabajo
-                workers.forEach( async function(element) {
-                    let worker = await User.findById(element)
-                    
-                    worker.works.push(service)
-                    //service.workers.push(worker)
-                    await user.save()
+                const workersDB = await User.find();
+
+
+                let flag = false;
+                let workersArray = [];
+
+                workers.forEach(worker => {
+                    const filteredWorkerDB = workersDB.filter(workerDB => JSON.stringify(workerDB._id) === JSON.stringify(worker));
+                    workersArray.push(filteredWorkerDB[0]);
                 });
+
+
+                workersArray.forEach(async workerSelected => {
+                    workerSelected.works.forEach(work => {
+                        if(JSON.stringify(work) === JSON.stringify(serviceId)){
+                            flag = true;
+                        };
+                    });
+                    if(!flag){
+                        workerSelected.works.push(service);
+                    };
+                    flag = false;
+                    await workerSelected.save();
+                });
+
+
+
+
+
+                let workersDoesntMatch = [];
+                flag = false;
+                workersDB.forEach(workerDB => {
+                    workersArray.forEach(worker => {
+                        if(worker._id === workerDB._id){
+                            flag = true;
+                        }
+                    })
+                    if(!flag){
+                        workersDoesntMatch.push(workerDB);
+                    };
+                    flag = false;
+                });
+                
+                workersDoesntMatch.forEach(workerDoesntMatch => {
+                    let flag2 = false;
+                    workersDB.forEach(async workerDB => {
+                        workerDoesntMatch.works.forEach(work => {
+                            if((JSON.stringify(work) === JSON.stringify(serviceId)) && !flag2){
+                                console.log('quitar ', work, 'de', workerDoesntMatch.userName);
+                                workerDB.works = workerDB.works.filter(workDB => JSON.stringify(workDB) != JSON.stringify(serviceId));
+                                flag2 = true;
+                            };
+                        })
+                        await workerDB.save();
+                    });
+                });
+                
         
                 await service.save()
 

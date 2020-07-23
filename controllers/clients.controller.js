@@ -17,15 +17,23 @@ module.exports = {
         .catch(err => res.status(404).json('Error' + err));
     },
     edit: function(req, res){
+        console.log('body', req.body);
         Client.findById(req.params.id)
         .then(client => {
-            client.email = req.body.email
+            client.nif = req.body.nif
             client.name = req.body.name
-            client.phone = req.body.phone
+            client.nameCompany = req.body.nameCompany
+            client.lastName = req.body.lastName
+            client.motherLastName = req.body.motherLastName
+            client.postalcode = req.body.postalcode
+            client.phoneOne = req.body.phoneOne
+            client.phoneTwo = req.body.phoneTwo
+            client.email = req.body.email
             client.direction = req.body.direction
             client.province = req.body.province
             client.municipality =  req.body.municipality
-            client.postalcode = req.body.postalcode
+            client.numberExternal = req.body.numberExternal
+            client.numberInternal = req.body.numberInternal
             client.save()
                 .then(() => res.status(200).send({message: 'Client Update!', client}))
                 .catch(err => res.status(404).json('Error' + err))
