@@ -43,6 +43,10 @@ module.exports = {
             service.numberInternal = req.body.numberInternal
             service.province = req.body.province
             service.municipality = req.body.municipality
+            service.numBill = req.body.numBill
+            service.typeIva = req.body.typeIva
+            service.activities = req.body.activities
+            service.note = req.body.note
             
             service.save()
                 .then(() => res.send(service))
@@ -138,7 +142,6 @@ module.exports = {
                     workersArray.push(filteredWorkerDB[0]);
                 });
 
-
                 workersArray.forEach(async workerSelected => {
                     workerSelected.works.forEach(work => {
                         if(JSON.stringify(work) === JSON.stringify(serviceId)){
@@ -151,10 +154,6 @@ module.exports = {
                     flag = false;
                     await workerSelected.save();
                 });
-
-
-
-
 
                 let workersDoesntMatch = [];
                 flag = false;
@@ -169,21 +168,21 @@ module.exports = {
                     };
                     flag = false;
                 });
-                
+
                 workersDoesntMatch.forEach(workerDoesntMatch => {
-                    let flag2 = false;
-                    workersDB.forEach(async workerDB => {
-                        workerDoesntMatch.works.forEach(work => {
-                            if((JSON.stringify(work) === JSON.stringify(serviceId)) && !flag2){
-                                console.log('quitar ', work, 'de', workerDoesntMatch.userName);
-                                workerDB.works = workerDB.works.filter(workDB => JSON.stringify(workDB) != JSON.stringify(serviceId));
-                                flag2 = true;
-                            };
-                        })
-                        await workerDB.save();
+                    workerDoesntMatch.works.forEach(work => {
+                        if(work == serviceId){
+                            workersDB.forEach(async workerDB => {
+                                if(workerDB.works === workerDoesntMatch.works){
+                                    workerDB.works = workerDB.works.filter(work => JSON.stringify(work) != JSON.stringify(serviceId));
+                                    await workerDB.save();
+                                };
+                            });
+                        };
                     });
                 });
                 
+
         
                 await service.save()
 
@@ -286,5 +285,13 @@ module.exports = {
                 console.log('file or directory does not exist');
             }
         }
+    },
+
+    worksPerUser: async function(req, res){
+        const { idUser } = req.params;
+
+        let services = await User.findById(idUser).populate('works');
+
+        res.send(services);
     }
 }

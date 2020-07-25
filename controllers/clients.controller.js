@@ -59,8 +59,8 @@ module.exports = {
     services: async function(req, res) {
         try {
             if(req.params.id) {
-                const client = await (await Client.findById(req.params.id)).execPopulate('services')
-                res.json(client)
+                const servicios = await (await Client.findById(req.params.id)).execPopulate('services')
+                res.send(servicios)
             }
             
         } catch(err) {

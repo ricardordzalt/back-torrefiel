@@ -16,5 +16,6 @@ router.route('/:idService/:idUser').delete( Service.delWorker)
 router.route('/images/:idService').get(Service.images)
 router.route('/downloadImges/:nameImg').get(Service.downloadImg)
 router.route('/downloadPdf/:folder').get(Service.downloadPdf)
+router.route('/userServices/:idUser').get(Service.worksPerUser)
 module.exports = router
 

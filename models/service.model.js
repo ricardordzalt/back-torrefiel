@@ -34,9 +34,9 @@ const servicesSchema = new Schema({
     finalized: {
         type: Date
     },
-    activities: {
+    activities: [{
         type: String
-    },
+    }],
     note: {
         type:String
     },
