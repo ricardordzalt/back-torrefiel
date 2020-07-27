@@ -8,7 +8,7 @@ const Imagen = require('../controllers/img.controller')
 router.route('/').get( Imagen.all)
 
 // router.route('/:id').delete(Imagen.destroy)
-router.route('/add/:idService').post(upload, Imagen.add)
+router.route('/add/:idService').post(upload.any('images'), Imagen.add)
 router.route('/:id').post( Imagen.deleteimage )
 
 

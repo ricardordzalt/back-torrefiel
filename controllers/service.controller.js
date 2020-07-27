@@ -6,15 +6,29 @@ const fs = require('fs')
 const path = require('path')
 const zipFolder = require('zip-a-folder');
 const { COPYFILE_FICLONE_FORCE } = require('constants')
+const { host} = require('../config').app
+
 
 
 
 
 module.exports = {
-    all: function(req, res) {
+    all: async function(req, res) {
+
+        const oldestService = await Service.find().sort({ _id: 1 }).limit(1)
+        const oldestYear = parseInt(JSON.stringify(oldestService[0].createdAt).replace('"', '').split('-')[0]);
+        const currentYear = new Date().getFullYear();
+
+        const years = [];
+        for(let i=currentYear;i<=currentYear+1;i++){
+            years.push(i);
+        };
+
+        console.log('years', years);
+
         Service.find()
-            .then(clients => res.status(200).json(clients))
-            .catch(err => res.status.status(404).json('Error' + err))
+            .then(clients => res.status(200).send({ clients, years }))
+            .catch(err => res.status(404).json('Error' + err))
     },
     viewOne: function(req, res){
         Service.findById(req.params.id)
@@ -293,5 +307,21 @@ module.exports = {
         let services = await User.findById(idUser).populate('works');
 
         res.send(services);
+    },
+    uploadSign: async function(req, res) {
+        const { filename } = req.file;
+        const { idService } = req.params;
+        const url = `${host}/public/images/${filename}`;
+
+        try{
+            const service = await Service.findById(idService);
+            service.signUrl = url;
+
+            await service.save();
+
+            res.send(service);
+        }catch(err) {
+            res.send('err', err);
+        };
     }
-}
+};

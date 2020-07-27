@@ -96,6 +96,9 @@ const servicesSchema = new Schema({
     },
     factura: {
         type: String
+    },
+    signUrl: {
+        type: String
     }
 },
 {
