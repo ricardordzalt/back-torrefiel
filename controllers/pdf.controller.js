@@ -3,6 +3,7 @@ const Imagen = require('../models/img.model');
 const Service = require('../models/service.model');
 const { host } = require('../config').app
 const fs = require('fs')
+const { sendPdf } = require('../services/sendPdf');
 
 
 
@@ -50,6 +51,29 @@ module.exports = {
             res.send(ruta)
     
         //    res.send(pdf)
-    }
+    },
+    send: function(req, res) {
+        const { email } = req.body;
 
+        const { path } = req.file;
+
+        const reqMail = { email, path, name: 'Ricardo', }
+
+        sendPdf(reqMail, 'Su factura/albarán');
+
+
+        setTimeout(function(){ 
+            fs.unlink(path, (error) => {
+                if(error) {
+                    console.log('Ha ocurrido un error')
+                }else{
+                    console.log('archivo pdf eliminado')
+                }
+                
+            })
+        }, 5000);
+
+
+        res.json('Email envíado');
+    }
 }

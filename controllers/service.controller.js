@@ -27,7 +27,7 @@ module.exports = {
         console.log('years', years);
 
         Service.find()
-            .then(clients => res.status(200).send({ clients, years }))
+            .then(services => res.status(200).send({ services, years }))
             .catch(err => res.status(404).json('Error' + err))
     },
     viewOne: function(req, res){

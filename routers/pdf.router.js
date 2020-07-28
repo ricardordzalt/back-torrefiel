@@ -8,8 +8,9 @@ const Pdf = require('../controllers/pdf.controller')
 router.route('/').get( Pdf.all)
 
 // router.route('/:id').delete(Pdf.destroy)
-router.route('/add').post(upload, Pdf.add)
-router.route('/:id').post(Pdf.deleteimage )
+router.route('/add').post(upload, Pdf.add);
+router.route('/:id').post(Pdf.deleteimage);
+router.route('/send').put(upload, Pdf.send);
 
 
 
