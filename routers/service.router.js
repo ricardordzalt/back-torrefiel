@@ -5,6 +5,7 @@ const isAdmin = require('../middleware/isadmin');
 const Service = require('../controllers/service.controller');
 const services = require('../services');
 const { upload } = require('../services/uploadImg');
+const isAuth = require('../middleware/isauth');
 
 // acá va el id del cliente que está pidiendo el servico
 router.route('/register/:idClient').post(Service.register);

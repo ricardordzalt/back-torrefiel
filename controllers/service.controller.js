@@ -16,7 +16,7 @@ module.exports = {
     all: async function(req, res) {
 
         const oldestService = await Service.find().sort({ _id: 1 }).limit(1)
-        const oldestYear = parseInt(JSON.stringify(oldestService[0].createdAt).replace('"', '').split('-')[0]);
+        //const oldestYear = parseInt(JSON.stringify(oldestService[0].createdAt).replace('"', '').split('-')[0]);
         const currentYear = new Date().getFullYear();
 
         const years = [];

@@ -44,6 +44,8 @@ module.exports = {
             
             const newClient = new Client(req.body)
             
+            console.log(req.body);
+
             newClient.save()
                 .then(() => {
                     const email = req.body.email
@@ -53,8 +55,8 @@ module.exports = {
                         })
                         .catch(err => res.status(404).json('Error' + err))
                     
-            })
-                .catch(err => res.status(404).json('Error' + err))
+                })
+                .catch(err => res.status(400).json('Error' + err))
     },
     services: async function(req, res) {
         try {

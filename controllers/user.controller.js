@@ -96,11 +96,12 @@ module.exports = {
         })
     },
     register: async function(req, res){
-        const {name, userName, lastName, motherLastName, phone, color } = req.body
+        const {name, userName, lastName, motherLastName, phone, color, password } = req.body
         const rol = req.body.rol ? "Administrador" : "Normal";
         // async..await is not allowed in global scope, must use a wrapper
         //const newUser = new User({ userName, name, phone, rol, lastName, motherLastName })
-        const newUser = new User({ name, userName, lastName, motherLastName, phone, color, rol })
+        req.body.password.length < 8 ? res.status(400).send('La contraseña debe ser de al menos 8 caracteres') : null;
+        const newUser = new User({ name, userName, lastName, motherLastName, phone, color, rol, password })
 
         let userDB = await User.findOne({ $or: [
             { phone },
@@ -131,11 +132,11 @@ module.exports = {
         let password = req.body.password
         User.findOne({ userName })
             .then(user => {
-                if(!user) return res.status(404).send({message: 'user not found'})
+                console.log('user', user)
+                if(!user) return res.status(200).send({message: 'Nombre de usuario no encontrado'})
                 bcrypt.compare(password, user.password)
                     .then(match => {
-                        if(!user.isVerify) return res.status(200).send({message: 'Tienes que verificar tu email.'})
-                        if(!match) return res.status(404).send({message: 'Password Incorrecta!!'})
+                        if(!match) return res.status(200).send({message: 'La contraseña es incorrecta'})
 
                         // res.status.json({token: service.createToken(user)}) ;
                             payLoad = {
@@ -146,15 +147,15 @@ module.exports = {
                             }
                         // poner clave secreta en una variable de entorno
                             jwt.sign(payLoad, config.app.secret_token , (err, token) => {
-                                if(err) return res.status(500).json({Error : err})
+                                if(err) return res.status(200).send({Error: 'Token incorrecto', err})
                                 const name = user.name
-                                res.status(200).json({message: 'aceso consedido', token, name})
+                                res.status(200).send({message: 'Acceso concedido', token, user})
                             })
                     })
-                    .catch(err => res.status(500).send({message: 'acá hay un error ', err}))
+                    .catch(err => res.status(200).send({message: 'Ha ocurrido un error verificando la contraseña', err}))
             })
-                
-            .catch(err => res.status(500).send({err}))
+
+            .catch(err => res.status(200).send({message: 'Ha ocurrido un error encontrando el usuario', err}))
     },
     sendEmailPassReset: function(req, res) {
     const  {email, userName} = req.body
