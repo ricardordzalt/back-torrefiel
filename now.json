@@ -18,7 +18,13 @@
           "src": "/user",
           "dest": "/index.js",
           "methods": [
-              "GET",
+              "GET"
+          ]
+      },
+      {
+          "src": "/user/register",
+          "dest": "/index.js",
+          "methods": [
               "POST"
           ]
       }
