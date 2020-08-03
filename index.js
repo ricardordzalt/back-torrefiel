@@ -10,13 +10,11 @@ const moment = require('moment')
 // const mongoose = require('mongoose');
 
 app.use(cors());
-app.options('*', cors());
-
-
 const router = express.Router();
 
 // const Service = require('./models/service.model')
 
+router.options('*', cors())
 
 //Middlewares
 app.use(morgan('dev'));
