@@ -3,14 +3,9 @@
   "builds": [{ "src": "index.js", "use": "@now/node-server" }],
   "routes": [
     {
-      "src": "/users",
+      "src": "/",
       "dest": "/index.js",
       "methods": ["GET"]
-    },
-    {
-      "src": "/user",
-      "dest": "/index.js",
-      "methods": ["POST"]
     }
   ]
 }
