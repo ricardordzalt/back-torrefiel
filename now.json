@@ -18,7 +18,8 @@
           "src": "/user",
           "dest": "/index.js",
           "methods": [
-              "GET"
+              "GET",
+              "POST"
           ]
       }
   ]
