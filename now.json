@@ -22,7 +22,63 @@
           ]
       },
       {
-          "src": "/user/register",
+          "src": "/user/:id",
+          "dest": "/index.js",
+          "methods": [
+              "GET"
+          ]
+      },
+      {
+          "src": "/update/:id",
+          "dest": "/index.js",
+          "methods": [
+              "PUT"
+          ]
+      },
+      {
+          "src": "/:id",
+          "dest": "/index.js",
+          "methods": [
+              "DELETE"
+          ]
+      },
+      {
+          "src": "/register",
+          "dest": "/index.js",
+          "methods": [
+              "POST"
+          ]
+      },
+      {
+          "src": "/confirmation/:token",
+          "dest": "/index.js",
+          "methods": [
+              "GET"
+          ]
+      },
+      {
+          "src": "/login",
+          "dest": "/index.js",
+          "methods": [
+              "POST"
+          ]
+      },
+      {
+          "src": "/emailpassreset",
+          "dest": "/index.js",
+          "methods": [
+              "POST"
+          ]
+      },
+      {
+          "src": "/passwordreset/:token",
+          "dest": "/index.js",
+          "methods": [
+              "POST"
+          ]
+      },
+      {
+          "src": "/roledit/:id",
           "dest": "/index.js",
           "methods": [
               "POST"
