@@ -8,7 +8,11 @@ const multer = require('multer')
 const fs = require('fs');
 const moment = require('moment')
 // const mongoose = require('mongoose');
-app.use(cors());
+app.use(cors({
+    origin: "*",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false
+  }));
 const router = express.Router();
 
 // const Service = require('./models/service.model')
